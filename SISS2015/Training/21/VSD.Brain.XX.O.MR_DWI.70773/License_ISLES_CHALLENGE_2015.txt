@@ -1,0 +1,36 @@
++++++++++++++++++++++++++++++++++
+ISLES 2015 Challenge Data License
++++++++++++++++++++++++++++++++++
+
+Home
+    http://www.isles-challenge.org/
+Mail
+    maier@imi.uni-luebeck.de
+
+1.  This license has to be kept at all time with the image data and
+    is not to be modified.
+
+2.  By downloading the image data, you confirm that you have read
+    this license and agree to its terms and conditions.
+    
+3.  The image data can be used to participate in the BrainLeS
+    workshop at the MICCAI 2015 conference (www.miccai2015.org),
+    including any of its submodules (ISLES challenge, BRATS 2015
+    challenge, Brain Segmentation workshop), as long as the
+    respective participation rules are satisfied, which includes
+    registration and participation at the workshop.
+    
+4.  The usage of the image data for any purpose except the one
+    detailed under point 3 is forbidden. This holds especially true
+    for employing the image data in any method evaluation or
+    publication not associated with the workshop.
+    
+5.  It is forbidden to publish the image data and/or parts of the
+    image data through any channel or to pass it on to a third party.
+    
+6.  It is absolutely forbidden to reconstruct and/or attempt to
+    reconstruct and/or re-establish the patients identities from the
+    image data or through any other means.
+    
+7.  After the challenge took place (Oktober 2015), the data will be
+    re-released under a general research license.

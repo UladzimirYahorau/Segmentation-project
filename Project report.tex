@@ -1,0 +1,69 @@
+\documentclass[12pt]{report}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\begin{document}
+\begin{center}
+      \Large\textbf{Brain Segmentation Project Report}
+\end{center}
+
+\section*{What is in the Segmentation Project folder}
+
+\begin{itemize}
+  \item {SISS2015 - a folder with medical images of 28 brains and their expert segmentations}
+  \item {segm\_model\_1nn.py - model with 2 phase training (not using a cascade architecture)}
+  \item {segm\_model.py - model with cascade architecture}
+  \item {predicted segmentations - a folder containing predicted segmentations of 28 brains, after running model\_testing.py, which tests the model in segm\_model\_1nn.py}
+  \item {brain\_data.py - module with helper functions}
+  \item {.chkp files - that's where our model is saved}
+  \item {valid\_history - that's where we track an evolution of an accuracy, dice coeff. during training and finally on all the brains}
+  \item {the other files are not very important}
+  
+\end{itemize}
+
+
+\section*{The goal of the project}
+
+The goal of the project is to perform an automatic Ischemic Stroke Lesion Segmentation of a brain. An automated method to locate the lesion area would support clinicians and researchers, rendering their findings more robust and reproducible. The data is taken from www.isles-challenge.org webpage, competition of 2015. We are interested in SISS sub-task, namely, in automatic segmentation of ischemic stroke lesion volumes from multi-spectral MRI sequences acquired in the sub-acute stroke development stage.
+
+\section*{Related works}
+
+The best results in this task in the ISLES-2015 competition was achieved by Kamnitsas et. al. in \cite{K}. They used 3D CNNs. They achieved a dice coefficient of 0.64 before post-processing (0.66 after). In their paper \cite{H}, Havaei et.al. present a fully automatic brain tumor segmentation method based on CNNs. They used 2D CNNs.
+
+\section*{Models}
+
+We use Convolutional Neural Networks in this project. The network is trained to predict whether the central voxel is pathology or normal brain tissue, depending on the content of the surrounding 2D horizontal patch.
+
+\section*{Architecture}
+
+We use architectures from \cite{H} . There are two main features of these architectures.
+Firstly, they are two-path architectures. I.e., there are two branches in the architecture - local and global. The motivation for this architectural choice is that we would like our predictions to be made based on the local information around the voxel as well as on a global information, which could be thought of as information about the region of a brain where the voxel is located.
+Secondly, the most complicated of these architectures are cascade architectures. The motivation for this is that it is unlikely that voxel labels are conditionally independent of the brain, and that's the assumption of our non-cascade CNN model. Therefore we augment the architecture with another two-path CNN. This second CNN has the same architecture as the first one, the only difference is that we add extra input features which are the output from the first network.
+
+\section*{Two-phase training}
+
+The training data is highly imbalanced, i.e., the healthy voxels comprise most of the brain. Therefore, as suggested in \cite{H}, we employ a two-phase training strategy. We initially construct our patches data set such that both labels are equiprobable. This is what we call the first phase. In the second phase, we account for the unbalanced nature of the data and retrain the output layer.
+
+\section*{Implementation details}
+
+We use TensorFlow library specialized in deep learning algorithms. It also supports the use of GPUs, which can greatly accelerate the execution of deep learning algorithms.
+
+\section*{Evaluation metric}
+
+To evaluate the performance of our model we use dice coefficient, which is defined as $\frac{2}{\frac{1}{precision}+ \frac{1}{recall}}$. We compute this coefficient for each of the brains.
+
+
+\begin{thebibliography}{ABCDE}
+
+\bibitem[K]{K} Kamnitsas et. al., {\em Multi-Scale 3D Convolutional Neural Networks for Lesion Segmentation in Brain MRI}.
+
+\bibitem[H]{H} Havaei et. al., {\em Brain Tumour Segmentation with Deep Neural Networks}.
+
+\end{thebibliography}
+
+
+
+
+\end{document}
