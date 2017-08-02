@@ -4,6 +4,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{hyperref}
+
 \begin{document}
 \begin{center}
       \Large\textbf{Brain Segmentation Project Report}
@@ -12,7 +14,7 @@
 \section*{What is in the Segmentation Project folder}
 
 \begin{itemize}
-  \item {SISS2015 - a folder with medical images of 28 brains and their expert segmentations}
+  \item {SISS2015 (\url{http://www.isles-challenge.org/ISLES2015/}) - a folder with medical images of 28 brains and their expert segmentations}
   \item {segm\_model\_1nn.py - model with 2 phase training (not using a cascade architecture)}
   \item {segm\_model.py - model with cascade architecture}
   \item {predicted segmentations - a folder containing predicted segmentations of 28 brains, after running model\_testing.py, which tests the model in segm\_model\_1nn.py}
@@ -25,6 +27,7 @@
 
 
 \section*{The goal of the project}
+
 
 The goal of the project is to perform an automatic Ischemic Stroke Lesion Segmentation of a brain. An automated method to locate the lesion area would support clinicians and researchers, rendering their findings more robust and reproducible. The data is taken from www.isles-challenge.org webpage, competition of 2015. We are interested in SISS sub-task, namely, in automatic segmentation of ischemic stroke lesion volumes from multi-spectral MRI sequences acquired in the sub-acute stroke development stage.
 
@@ -48,12 +51,16 @@ The training data is highly imbalanced, i.e., the healthy voxels comprise most o
 
 \section*{Implementation details}
 
-We use TensorFlow library specialized in deep learning algorithms. It also supports the use of GPUs, which can greatly accelerate the execution of deep learning algorithms.
+We use TensorFlow (\url{https://www.tensorflow.org/}) library specialized in deep learning algorithms. It also supports the use of GPUs, which can greatly accelerate the execution of deep learning algorithms.
 
 \section*{Evaluation metric}
 
-To evaluate the performance of our model we use dice coefficient, which is defined as $\frac{2}{\frac{1}{precision}+ \frac{1}{recall}}$. We compute this coefficient for each of the brains.
+To evaluate the performance of our model we use dice coefficient, which is defined as $\frac{2}{\frac{1}{precision}+ \frac{1}{recall}}$ ( see \url{https://en.wikipedia.org/wiki/F1_score} for more detailes). We compute this coefficient for each of the brains.
 
+\section*{State of the project}
+We trained a model in segm\_model\_1nn.py on first 21 brains and achieved dice coefficient ~0.70 on the samples from the remaining 7 brains. At the same time the dice coefficient was much smaller when we validated our model in model\_testing.py. It was between 0.00 and 0.29 for different brains. For more details see valid\_history.txt . I am confident that saving the model and loading it back as was done in segm\_model\_1nn.py loads back the saved weights. It is strange that dice coefficient differs so much when we evaluate it on entire brain. That's something to check. 
+
+The cascade model in segm\_model.py could be trained in the same way as simpler model in segm\_model\_1nn.py. After each stage of training we save a model to a file, then load its weights back and continue training. At test time evaluation is almost the same.  
 
 \begin{thebibliography}{ABCDE}
 
